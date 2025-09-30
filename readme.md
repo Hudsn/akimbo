@@ -3,7 +3,7 @@
 ### What is it?
 A drop-in browser hot reloader for Go applications.
 
-Simply use the helpers in this package to generate a HandlerFunc, add the script to your frontend, whether that be Go templates, static html, or an SPA, and enjoy automatic browser reloading on save!
+Simply use the helpers in this package to generate a HandlerFunc, add the script to your frontend, whether that be Go templates, static html, or an embedded SPA, and enjoy automatic browser reloading on save!
 
 ### How does it work?
 When target files on your system are changed, the reload handler sends a 
@@ -78,7 +78,7 @@ Any page that includes this script tag should automatically reload the browser w
 #### Note
 You can also access the script tag as a string via `myreloader.ScriptTag()` if you want to dynamically add it via someting like Go HTML Templates or Templ. 
 
-#### Warning
+#### Caveat
 Be aware that any **embedded** templates or files won't change on **browser** reload since they're compiled into the temporary binary at build time, and won't reflect source file changes.
 
-To circumvent this, when developing you can serve files directly from your local system, and then when building a project you can use the embedded version of those files.
+To circumvent this, when developing you can serve files directly from your local system, and then when building a project you should use the embedded version of those files.

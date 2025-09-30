@@ -6,26 +6,21 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
-	"os"
-	"path/filepath"
-	"runtime"
 
 	"github.com/hudsn/spicyreload"
 )
 
+func noCacheHandler(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		w.Header().Set("Pragma", "no-cache")
+		w.Header().Set("Expires", "0")
+		h.ServeHTTP(w, r)
+	})
+}
 func ExampleServer(ctx context.Context, port int) {
-	_, callingFile, _, _ := runtime.Caller(0)
-	staticPath := filepath.Join(filepath.Dir(callingFile), "static")
-	cwd, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	relativePath, err := filepath.Rel(cwd, staticPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fileFn := http.FileServer(http.Dir(relativePath))
+	fileFn := http.FileServer(http.Dir("example/static"))
 
 	reloadConfig := spicyreload.Config{
 		UrlPath:    "/spicyreload",
@@ -36,9 +31,10 @@ func ExampleServer(ctx context.Context, port int) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	noCacheHandler(fileFn)
 	router := http.NewServeMux()
-	router.HandleFunc("/", fileFn.ServeHTTP)
+	// router.HandleFunc("/", fileFn.ServeHTTP)
+	router.HandleFunc("/", noCacheHandler(fileFn).ServeHTTP)
 	router.HandleFunc(reloader.SSEHandlerPath(), reloader.SSEHandler(ctx))
 	router.HandleFunc(reloader.ScriptHandlerPath(), reloader.ScriptHandler(true))
 
