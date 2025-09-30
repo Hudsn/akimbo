@@ -1,4 +1,4 @@
-package akimbo
+package spicyreload
 
 import (
 	"context"

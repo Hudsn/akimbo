@@ -1,4 +1,4 @@
-module github.com/hudsn/akimbo
+module github.com/hudsn/spicyreload
 
 go 1.23.0
 

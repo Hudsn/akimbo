@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/hudsn/akimbo"
+	"github.com/hudsn/spicyreload"
 )
 
 func ExampleServer(ctx context.Context, port int) {
@@ -27,12 +27,12 @@ func ExampleServer(ctx context.Context, port int) {
 	}
 	fileFn := http.FileServer(http.Dir(relativePath))
 
-	reloadConfig := akimbo.Config{
-		UrlPath:    "/akimboreload",
+	reloadConfig := spicyreload.Config{
+		UrlPath:    "/spicyreload",
 		Extensions: []string{"css", "js", "html"},
 		Paths:      []string{"example/static"},
 	}
-	reloader, err := akimbo.NewReloader(reloadConfig)
+	reloader, err := spicyreload.NewReloader(reloadConfig)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,4 +1,4 @@
-## Akimbo Reloader
+## Spicy Reload
 
 ### What is it?
 A drop-in browser hot reloader for Go applications.
@@ -6,7 +6,7 @@ A drop-in browser hot reloader for Go applications.
 Simply use the helpers in this package to generate a HandlerFunc, add the script to your frontend, whether that be Go templates, static html, or an SPA, and enjoy automatic browser reloading on save!
 
 ### How does it work?
-When target files on your system are changed, the Akimbo handler sends a 
+When target files on your system are changed, the reload handler sends a 
 signal to the browser script to trigger a browser reload.
 
 ## How do I use it?
@@ -14,7 +14,7 @@ signal to the browser script to trigger a browser reload.
 ### Installation
 
 ```
-go get github.com/hudsn/akimbo
+go get github.com/hudsn/spicyreload
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ go get github.com/hudsn/akimbo
 #### Create the config:
 ```go
 // create the config
-config := akimbo.Config{
+config := spicyreload.Config{
     // the http endpoint that communicates with the browser script
     UrlPath: "/my_reloader", 
 
@@ -40,7 +40,7 @@ config := akimbo.Config{
 #### Create the reloader object:
 
 ```go
-reloader, err := akimbo.NewReloader(reloadConfig)
+reloader, err := spicyreload.NewReloader(reloadConfig)
 if err != nil {
     log.Fatal(err)
 }

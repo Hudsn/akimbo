@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/hudsn/akimbo/example"
+	"github.com/hudsn/spicyreload/example"
 )
 
 func main() {
